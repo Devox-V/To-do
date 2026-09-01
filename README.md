@@ -1,20 +1,17 @@
-# APEX-UI
+# Luna
 
-An animated **autonomous-agent orb + reasoning-graph** interface — the front-end of
-[Apex](https://reznikov-engineering.com/apex), released open source.
+A personal voice assistant with an animated orb interface.
 
-Tap the orb to cycle its state (idle → thinking → speaking); the reasoning web reacts,
-agent nodes orbit the core, and clicking any node opens an overview card. The orb ring,
-agent graph and status bar are **hand-written SVG / CSS**; the cyan particle core is a
-small `react-three-fiber` scene (skipped under `prefers-reduced-motion`); and the WebGL
-shader backdrop + the overview lamp panel are **MIT community components from
-[21st.dev](https://21st.dev/community/components)** (see [CREDITS](./CREDITS.md)).
+Luna is built on the [APEX-UI](https://github.com/RubenM1990/APEX-UI) orb + reasoning-graph
+front-end (MIT — see [LICENSE](./LICENSE) and [CREDITS](./CREDITS.md)) and rebuilt into a
+working assistant: hold the orb to talk, and the capability graph around it maps what Luna
+can actually do.
 
 > Built with Next.js 15 + React 19. Runtime deps: `lucide-react` (icons) and
 > `three` / `@react-three/fiber` / `@react-three/postprocessing` (the particle core) —
 > all MIT-licensed.
 
-## Demo
+## Run it
 
 ```bash
 npm install
@@ -22,49 +19,39 @@ npm run dev
 # open http://localhost:3000
 ```
 
-Then `npm run build` for a production build, or deploy to Vercel in one click.
+Then `npm run build` for a production build.
 
 ## What's inside
 
 | Piece | What it does |
 |-------|--------------|
-| `ApexOrb` | The golden ring frame, waveform and orbit dots (pure SVG) |
-| `ApexCore3D` | The cyan particle core (`react-three-fiber` + bloom) |
-| `ApexHeroOrb` | Stacks the SVG ring + the particle core, scaled to fit |
-| `ReasoningWeb` | The agent constellation — circuit traces, orbit rings, 18-node roster |
-| `OrbStatusBar` | The equalizer + STANDBY cluster along the bottom |
+| `LunaOrb` | The ring frame, waveform and orbit dots (pure SVG) |
+| `LunaCore3D` | The particle core (`react-three-fiber` + bloom) |
+| `LunaHeroOrb` | Stacks the SVG ring + the particle core, scaled to fit |
+| `ReasoningWeb` | The capability constellation — circuit traces, orbit rings, 18-node graph |
+| `OrbStatusBar` | The equalizer + state cluster along the bottom |
 | `ShaderBackground` | Animated WebGL "plasma waves" backdrop (MIT component from 21st.dev — see CREDITS) |
-| `ApexWorld` | Composes the above; owns the tap-state cycle and the agent overview cards |
-| `ApexOverviewPanel` | Top-left HUD: live clock, weather, and social links |
+| `LunaWorld` | Composes the above; owns the orb state machine and the capability cards |
+| `LunaOverviewPanel` | Top-left HUD: live clock, weather, and links |
 | `app/api/weather` | Keyless [open-meteo](https://open-meteo.com) proxy for the panel's weather |
 
 ## Customise
 
-- **Social links** → edit `TILES` in `components/ApexOverviewPanel.tsx`.
-- **Weather** → auto-detects the **visitor's** city on Vercel (geo headers); edit `FALLBACK` in `app/api/weather/route.ts` to change the off-Vercel / localhost default.
-- **Agents & copy** → the `ROSTER` and `INFO` maps in `components/ApexWorld.tsx`.
-- **Backdrop** → the shader in `components/ShaderBackground.jsx`; its opacity/tint are set where `<ShaderBackground>` is used in `ApexWorld.tsx`.
+- **Links** → edit `TILES` in `components/LunaOverviewPanel.tsx` (currently placeholders).
+- **Weather** → auto-detects the visitor's city on Vercel (geo headers); off Vercel it
+  reports no location rather than guessing.
+- **Capabilities & copy** → the `ROSTER` and `INFO` maps in `components/LunaWorld.tsx`.
+- **Backdrop** → the shader in `components/ShaderBackground.jsx`; its opacity/tint are set
+  where `<ShaderBackground>` is used in `LunaWorld.tsx`.
 
 ## Accessibility
 
-The decorative SVG graph is mirrored by a real, keyboard-navigable agent list
+The decorative SVG graph is mirrored by a real, keyboard-navigable list
 (`.visually-hidden`), the orb and every control are focusable, and the whole thing
 respects `prefers-reduced-motion`.
 
-## Not included (on purpose)
-
-This repo is the **UI only**. The production Apex page also has a spoken-voice layer and a
-"story" narrative — those are personal recordings and private copy, so they are intentionally
-left out. The orb stays fully interactive without them.
-
 ## License
 
-Code is released under the **[MIT License](./LICENSE)** — use it, fork it, ship it.
-
-The **name "Apex" and the Reznikov Engineering branding are not part of this license.**
-If you build on this, please use your own product name and branding.
-
----
-
-Made by [Ruben Mouradian — Reznikov Engineering](https://reznikov-engineering.com).
-If you use it, a link back is appreciated (not required).
+Code is released under the **[MIT License](./LICENSE)**, which covers the upstream
+APEX-UI code this is built on. The name "Apex" and the original author's branding are
+**not** part of that license and are not used here.

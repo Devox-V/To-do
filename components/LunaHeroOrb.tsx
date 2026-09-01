@@ -2,13 +2,13 @@
 
 import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
-import ApexOrb from "./ApexOrb";
-import "./apex-orb.css";
+import LunaOrb from "./LunaOrb";
+import "./luna-orb.css";
 
 // three/fiber must never SSR
-const ApexCore3D = dynamic(() => import("./ApexCore3D"), { ssr: false });
+const LunaCore3D = dynamic(() => import("./LunaCore3D"), { ssr: false });
 
-// Stage matches the Apex app's on-screen proportions: the ring renders at its
+// Stage matches the Luna app's on-screen proportions: the ring renders at its
 // natural 900×520 and the particle canvas gets ~900px of height, so the awake
 // ball (~166px) fills the R=155 ring exactly like in the app. The whole stage
 // scales down to fit whatever container the hero gives it.
@@ -17,7 +17,7 @@ const STAGE_H = 900;
 
 export type OrbState = "idle" | "thinking" | "speaking";
 
-export default function ApexHeroOrb({ state: controlled, onStateChange, interactive = true }: { state?: OrbState; onStateChange?: (s: OrbState) => void; interactive?: boolean } = {}) {
+export default function LunaHeroOrb({ state: controlled, onStateChange, interactive = true }: { state?: OrbState; onStateChange?: (s: OrbState) => void; interactive?: boolean } = {}) {
   const boxRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(0.6);
   const [inner, setInner] = useState<OrbState>("idle");
@@ -54,7 +54,7 @@ export default function ApexHeroOrb({ state: controlled, onStateChange, interact
   useEffect(() => () => { if (timer.current) clearTimeout(timer.current); }, []);
 
   // Tap 1 → the core surges (expands, boils faster, bright sound-waves).
-  // Tap 2 → voice mode: the fast rippling waves the app shows while Apex speaks.
+  // Tap 2 → voice mode: the fast rippling waves the app shows while Luna speaks.
   // Tap 3 (or 8s of no taps) → back to the slow idle boil.
   const boost = () => {
     const next: OrbState = state === "idle" ? "thinking" : state === "thinking" ? "speaking" : "idle";
@@ -73,13 +73,13 @@ export default function ApexHeroOrb({ state: controlled, onStateChange, interact
             onMouseDown: (e: React.MouseEvent) => e.preventDefault(), // clicks don't leave a focus ring; keyboard focus still shows
             role: "button",
             tabIndex: 0,
-            "aria-label": "Apex core - tap to energize",
+            "aria-label": "Luna core - tap to energize",
           }
         : { "aria-hidden": true as const })}
       style={{ position: "relative", width: "100%", height: "100%", cursor: interactive ? "pointer" : "default", pointerEvents: interactive ? "auto" : "none", borderRadius: "50%", userSelect: "none" }}
     >
       <div
-        data-apex-stage
+        data-luna-stage
         style={{
           position: "absolute",
           left: "50%",
@@ -91,11 +91,11 @@ export default function ApexHeroOrb({ state: controlled, onStateChange, interact
       >
         {/* golden ring frame - same SVG as the app, label/equalizer hidden */}
         <div style={{ position: "absolute", left: 0, top: (STAGE_H - 520) / 2, pointerEvents: "none" }}>
-          <ApexOrb state={state} variant="frame" onRingClick={undefined} />
+          <LunaOrb state={state} variant="frame" onRingClick={undefined} />
         </div>
         {/* cyan particle core - contained to this stage instead of full-screen.
             Skipped entirely under prefers-reduced-motion (static ring remains). */}
-        {!reducedMotion && <ApexCore3D state={state} variant="particles" contained onClick={undefined} />}
+        {!reducedMotion && <LunaCore3D state={state} variant="particles" contained onClick={undefined} />}
       </div>
     </div>
   );

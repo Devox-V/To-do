@@ -54,7 +54,7 @@ function SoundWaves({ cx, cy, R, active }) {
   )
 }
 
-export default function ApexOrb({ state = 'idle', onRingClick, variant }) {
+export default function LunaOrb({ state = 'idle', onRingClick, variant }) {
   const frameOnly = variant === 'frame'   // hide the center cluster (it moves to the status bar)
   const W = 900, H = 520
   // In FRAME mode (reasoning-web/front) the ring must be dead-centre so it's concentric with the
@@ -71,7 +71,7 @@ export default function ApexOrb({ state = 'idle', onRingClick, variant }) {
   const label = isListening ? 'LISTENING' : isSpeaking ? 'SPEAKING' : isThinking ? 'PROCESSING' : 'STANDBY'
 
   return (
-    <div className="apex-orb-wrap" data-state={state} style={{ width: W, height: H }}>
+    <div className="luna-orb-wrap" data-state={state} style={{ width: W, height: H }}>
       <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} fill="none">
         <defs>
           <radialGradient id="ringFill" cx="50%" cy="50%" r="50%">

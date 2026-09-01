@@ -1,7 +1,7 @@
 {
-  "name": "apex-ui",
+  "name": "luna",
   "version": "1.0.0",
-  "description": "An animated autonomous-agent orb + reasoning-graph UI. Hand-written SVG/CSS, no 3D libraries.",
+  "description": "Luna — a personal voice assistant: animated orb interface, voice input, and a tool-calling brain.",
   "license": "MIT",
   "private": false,
   "scripts": {

@@ -1,8 +1,8 @@
-/* Apex orb animations - copied from apex-frontend/src/index.css (orb-relevant subset). */
+/* Luna orb animations - from the upstream app's index.css (orb-relevant subset). */
 
 /* The r3f canvas must always fill the stage (its drawing buffer is synced by fiber
    on the first animation frame; this guarantees the display size meanwhile). */
-[data-apex-stage] canvas { width: 100% !important; height: 100% !important; }
+[data-luna-stage] canvas { width: 100% !important; height: 100% !important; }
 
 /* ── Waveform bars ── */
 @keyframes waveBar {
@@ -42,8 +42,8 @@
 .wave-2 { animation-delay: 1.8s; }
 .wave-3 { animation-delay: 2.7s; }
 
-.apex-orb-wrap[data-state="speaking"] .sound-wave,
-.apex-orb-wrap[data-state="thinking"] .sound-wave {
+.luna-orb-wrap[data-state="speaking"] .sound-wave,
+.luna-orb-wrap[data-state="thinking"] .sound-wave {
   animation-name: soundWaveActive;
   animation-duration: 2s;
 }
@@ -64,7 +64,7 @@
 }
 .orb-center-ring { animation: centerRingPulse 2.5s ease-in-out infinite; }
 
-/* ── Apex Orb Animations ── */
+/* ── Luna Orb Animations ── */
 @keyframes orbRotateCW {
   from { transform: rotate(0deg); }
   to   { transform: rotate(360deg); }
@@ -117,35 +117,35 @@
   60%  { opacity: 0.25; }
   100% { r: 280; opacity: 0; stroke-width: 0.5; }
 }
-.apex-orb-wrap[data-state="listening"] {
+.luna-orb-wrap[data-state="listening"] {
   animation: listeningGrow 1s cubic-bezier(0.22, 1, 0.36, 1) forwards,
              listeningPulse 2.4s ease-in-out 1s infinite;
   transform-origin: center;
 }
-.apex-orb-wrap[data-state="listening"] .sound-wave {
+.luna-orb-wrap[data-state="listening"] .sound-wave {
   animation-name: listeningRing;
   animation-duration: 1.6s;
 }
-.apex-orb-wrap[data-state="listening"] .orb-ring-breathe {
+.luna-orb-wrap[data-state="listening"] .orb-ring-breathe {
   animation: ringBreathe 1s ease-in-out infinite;
 }
-.apex-orb-wrap[data-state="listening"] .orb-ring-glow {
+.luna-orb-wrap[data-state="listening"] .orb-ring-glow {
   animation: ringBreathe 0.8s ease-in-out infinite;
 }
 
 /* ── Faster pulse when thinking */
-.apex-orb-wrap[data-state="thinking"] .orb-core-pulse {
+.luna-orb-wrap[data-state="thinking"] .orb-core-pulse {
   animation: orbPulseFast 1s ease-in-out infinite;
 }
-.apex-orb-wrap[data-state="thinking"] .orb-ring-slow {
+.luna-orb-wrap[data-state="thinking"] .orb-ring-slow {
   animation-duration: 6s;
 }
-.apex-orb-wrap[data-state="thinking"] .orb-ring-medium {
+.luna-orb-wrap[data-state="thinking"] .orb-ring-medium {
   animation-duration: 4s;
 }
 
 /* Bigger glow when speaking */
-.apex-orb-wrap[data-state="speaking"] .orb-ambient {
+.luna-orb-wrap[data-state="speaking"] .orb-ambient {
   animation: orbAmbient 1s ease-in-out infinite;
   opacity: 0.35;
 }

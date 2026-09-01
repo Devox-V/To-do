@@ -1,14 +1,14 @@
 "use client";
 
 /**
- * OVERVIEW lamp panel - same design as the Apex app's top-left HUD
+ * OVERVIEW lamp panel - the top-left HUD
  * (OverviewMode.jsx): glowing filament line + sliding node + "OVERVIEW"
  * label, live clock/date and Tel-Aviv weather (open-meteo, same endpoint
  * as the app).
  *
  * Clicking the lamp opens the tiles. They are deliberately three different
  * kinds of thing, and each says which it is before it is pressed: "What is
- * Apex" opens the story overlay, "develop your own" goes to the guide, and the
+ * Luna" opens the story overlay, "develop your own" goes to the guide, and the
  * three social tiles leave the site (marked with an arrow, and they open in a
  * new tab so nobody loses the page they were on).
  */
@@ -21,11 +21,12 @@ const WCODE: Record<number, string> = { 0: "Clear", 1: "Mainly clear", 2: "Partl
 
 type Tile = { key: string; icon: typeof Sparkles; label: string; href: string };
 
-// Social links stay live — they point to public profiles. Swap them for your own.
+// Placeholders — the upstream profile links were the original author's, so they
+// are gone. Point these at your own before using them.
 const TILES: Tile[] = [
-  { key: "instagram", icon: Instagram, label: "Follow us on Instagram", href: "https://www.instagram.com/reznikov_engineering/" },
-  { key: "facebook",  icon: Facebook,  label: "Follow us on Facebook",  href: "https://www.facebook.com/profile.php?id=61590746065386" },
-  { key: "linkedin",  icon: Linkedin,  label: "Follow us on LinkedIn",  href: "https://www.linkedin.com/in/ruben-mouradian-150698173" },
+  { key: "instagram", icon: Instagram, label: "Instagram — set your link", href: "#" },
+  { key: "facebook",  icon: Facebook,  label: "Facebook — set your link",  href: "#" },
+  { key: "linkedin",  icon: Linkedin,  label: "LinkedIn — set your link",  href: "#" },
 ];
 
 function Clock() {
@@ -74,14 +75,14 @@ function Clock() {
   );
 }
 
-export default function ApexOverviewPanel() {
+export default function LunaOverviewPanel() {
   const [open, setOpen] = useState(false);
   const FIL = open ? 480 : 320; // filament width - grows when lit
 
   /**
    * How long the filament may actually get.
    *
-   * The "Site home" pill sits at the top right of /apex, on the same line as
+   * The repo pill sits at the top right of the page, on the same line as
    * this lamp, and the filament used to run straight under it - and the node
    * that slides to the far end when the lamp opens parked underneath it. The
    * 184px is that pill's real estate: 8px lamp inset + up to 40px page inset +
@@ -109,7 +110,7 @@ export default function ApexOverviewPanel() {
   );
 
   return (
-    <div className="apex-overview" style={{ pointerEvents: "none" }}>
+    <div className="luna-overview" style={{ pointerEvents: "none" }}>
       {/* downward glow cone */}
       <div style={{
         position: "absolute", top: 14, left: 8, width: "min(520px, 94vw)", height: 240, pointerEvents: "none",

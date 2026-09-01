@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * ApexCore3D â€” Command-Center core, with selectable variants:
+ * LunaCore3D â€” Command-Center core, with selectable variants:
  *   geodesic  â€” gold icosahedron wireframe + glowing nodes
  *   meridian  â€” smooth sphere lat/long lines (round connections) + nodes
  *   gyro      â€” tilted drifting rings, each with a cyan light-ball orbiting it
@@ -108,7 +108,7 @@ function Equalizer() {
             background: 'linear-gradient(#ffe6ad, #f5a623)',
             boxShadow: '0 0 6px rgba(245,166,35,0.55)',
             transformOrigin: 'center',
-            animation: `apexEq ${dur}s ease-in-out ${delay}s infinite`,
+            animation: `lunaEq ${dur}s ease-in-out ${delay}s infinite`,
           }} />
         )
       })}
@@ -167,7 +167,7 @@ function Core({ state, variant, corner = false, bigDock = false }) {
   const calmCarryRef = useRef(0)
 
   useFrame((frame, dt) => {
-    // [perf] Tier B Step 1: while a reply streams / Apex speaks, halve the per-frame particle work (skip
+    // [perf] Tier B Step 1: while a reply streams / Luna speaks, halve the per-frame particle work (skip
     // every other frame) so the main thread stops starving the WS audio-delivery queue. Two guards keep
     // the throttle from reading as a FROZEN orb (Ruben saw the ball stop mid-way through long replies):
     // (1) the skipped frame's dt is CARRIED into the next computed frame, so world-speed stays constant
@@ -222,7 +222,7 @@ function Core({ state, variant, corner = false, bigDock = false }) {
         if (corner) {
           // Track the ring's REAL on-screen centre (canvas is full-screen here) so the ball
           // sits in the corner ring no matter how the ring is transformed/the window resizes.
-          const orbEl = document.querySelector('[data-apex-orb]')
+          const orbEl = document.querySelector('[data-luna-orb]')
           let placed = false
           if (orbEl && frame.gl) {
             const rect = orbEl.getBoundingClientRect()
@@ -235,7 +235,7 @@ function Core({ state, variant, corner = false, bigDock = false }) {
               const denom = tmp.v.z - frame.camera.position.z
               const sParam = Math.abs(denom) < 1e-5 ? 0 : -frame.camera.position.z / denom
               tmp.w.copy(frame.camera.position).addScaledVector(tmp.v.sub(frame.camera.position), sParam)
-              // CHAT (bigDock): the ring is dead-centred in [data-apex-orb] (ApexOrb frame mode, cy=H/2),
+              // CHAT (bigDock): the ring is dead-centred in [data-luna-orb] (LunaOrb frame mode, cy=H/2),
               // so the unprojected point above IS the true ring centre â€” no Y fudge. The eng tiny-corner
               // keeps its small lift. (Was a flat +0.08 â†’ the chat cloud sat high, off-centre.)
               tmp.w.y += bigDock ? 0 : 0.08
@@ -422,7 +422,7 @@ function Core({ state, variant, corner = false, bigDock = false }) {
   )
 }
 
-export default function ApexCore3D({ state = 'idle', variant = 'geodesic', onClick, corner = false, bigDock = false, contained = false }) {
+export default function LunaCore3D({ state = 'idle', variant = 'geodesic', onClick, corner = false, bigDock = false, contained = false }) {
   const st = normalizeState(state)
   const label = st === 'processing' ? 'Processing' : st === 'listening' ? 'Listening' : st === 'speaking' ? 'Speaking' : 'Standby'
   const [bgIdx, setBgIdx] = useState(2) // Grid default
@@ -489,15 +489,15 @@ export default function ApexCore3D({ state = 'idle', variant = 'geodesic', onCli
         }}>
           <Equalizer />
           <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-            <span style={{ width: 7, height: 7, borderRadius: '50%', background: GOLD, boxShadow: `0 0 10px ${GOLD}`, animation: 'apexPulse 1.8s ease-in-out infinite' }} />
+            <span style={{ width: 7, height: 7, borderRadius: '50%', background: GOLD, boxShadow: `0 0 10px ${GOLD}`, animation: 'lunaPulse 1.8s ease-in-out infinite' }} />
             <span style={{ color: '#ffd98a', fontFamily: "'Share Tech Mono', monospace", letterSpacing: '0.5em', fontSize: 16, textTransform: 'uppercase', textShadow: '0 0 18px rgba(245,166,35,0.7), 0 0 4px rgba(245,166,35,0.9)' }}>{label}</span>
           </div>
         </div>
       )}
 
       <style>{`
-        @keyframes apexPulse { 0%,100% { opacity: 1; transform: scale(1) } 50% { opacity: .35; transform: scale(.6) } }
-        @keyframes apexEq { 0%,100% { transform: scaleY(0.25) } 50% { transform: scaleY(1) } }
+        @keyframes lunaPulse { 0%,100% { opacity: 1; transform: scale(1) } 50% { opacity: .35; transform: scale(.6) } }
+        @keyframes lunaEq { 0%,100% { transform: scaleY(0.25) } 50% { transform: scaleY(1) } }
       `}</style>
     </div>
   )

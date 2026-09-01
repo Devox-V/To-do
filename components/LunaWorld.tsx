@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * ApexWorld - the Apex app's CURRENT main screen, replicated for the site.
+ * LunaWorld - Luna's main screen.
  * Layers: app-blue backdrop → clickable orb core (ring + particles, same tap
  * cycle) → ReasoningWeb (verbatim copy from the app: circuit traces, orbit
  * rings, the full asymmetric roster, ambient motes) → OrbStatusBar (equalizer
@@ -11,7 +11,7 @@
  */
 
 import { useEffect, useRef, useState } from "react";
-import ApexHeroOrb, { type OrbState } from "./ApexHeroOrb";
+import LunaHeroOrb, { type OrbState } from "./LunaHeroOrb";
 import ReasoningWebJs from "./ReasoningWeb";
 import ShaderBackgroundJs from "./ShaderBackground";
 import OrbStatusBar from "./OrbStatusBar";
@@ -33,7 +33,7 @@ type AgentInfo = {
   status: "online" | "standby" | "integration";
 };
 
-/* Mirrors the ROSTER in ReasoningWeb.jsx (a verbatim copy from the Apex app, so
+/* Mirrors the ROSTER in ReasoningWeb.jsx (an upstream copy kept unedited, so
    it is not edited here). Backs the visually-hidden agent list that gives the
    decorative SVG graph a keyboard and screen-reader equivalent - keep in sync if
    the copy's roster changes. */
@@ -97,7 +97,7 @@ export const INFO: Record<string, AgentInfo> = {
     caps: ["Background removal and replacement", "Text overlays", "Resize for social media", "Filters and enhancement"],
     asks: ["Remove background", "Resize for IG"] },
   developer: { role: "Keeper of the build log", status: "standby",
-    caps: ["Keeps Apex's development log", "Recaps what shipped - day / week / month", "Future: builds Apex itself"],
+    caps: ["Keeps Luna's development log", "Recaps what shipped - day / week / month", "Future: builds Luna itself"],
     asks: ["Recap last week"] },
   analytics: { role: "Numbers feed", status: "integration",
     caps: ["Performance metrics across every channel", "Feeds the weekly reviews"] },
@@ -112,7 +112,7 @@ export const INFO: Record<string, AgentInfo> = {
 };
 
 const STATUS_LINE: Record<AgentInfo["status"], { color: string; text: string }> = {
-  online: { color: "#34d399", text: "Online - Apex routes work to it automatically" },
+  online: { color: "#34d399", text: "Online - Luna routes work to it automatically" },
   standby: { color: "#c9a84c", text: "Standby - in active development" },
   integration: { color: "#7f9bb3", text: "Integration - wired into the core" },
 };
@@ -121,7 +121,7 @@ const STATUS_LINE: Record<AgentInfo["status"], { color: string; text: string }> 
 export function AgentOverview({ sel, onClose }: { sel: NodeSel; onClose: () => void }) {
   const [pos, setPos] = useState<{ x: number; y: number } | null>(null);
   const dragRef = useRef<{ sx: number; sy: number } | null>(null);
-  const info = INFO[sel.key] ?? { role: "Specialist", status: "online" as const, caps: ["Part of the Apex core"] };
+  const info = INFO[sel.key] ?? { role: "Specialist", status: "online" as const, caps: ["Part of the Luna core"] };
   const c = sel.color;
   const status = STATUS_LINE[info.status];
 
@@ -229,7 +229,7 @@ export function AgentOverview({ sel, onClose }: { sel: NodeSel; onClose: () => v
 }
 
 /* ── The world ── */
-export default function ApexWorld() {
+export default function LunaWorld() {
   const [selected, setSelected] = useState<NodeSel | null>(null);
   const [reduced, setReduced] = useState(false);
 
@@ -292,7 +292,7 @@ export default function ApexWorld() {
 
       {/* the reasoning web - app z-order: web (z13) sits BELOW the orb canvas (z15),
           so the bloom haze washes over the lines near the centre, exactly like the app */}
-      {/* ReasoningWeb is a verbatim copy from the Apex app: its 18 agent nodes are
+      {/* ReasoningWeb is kept as an upstream copy: its 18 nodes are
           imperative SVG hit-areas with no tabindex, inside an svg[role=img] that
           collapses the whole graph into a single image. Rather than edit the copy,
           the graph is marked decorative here and the same onSelect path is exposed
@@ -307,7 +307,7 @@ export default function ApexWorld() {
       </div>
 
       {/* Keyboard and screen-reader equivalent of the agent graph. */}
-      <nav className="visually-hidden" aria-label="Apex agents">
+      <nav className="visually-hidden" aria-label="Luna agents">
         <ul>
           {ROSTER.map((a) => (
             <li key={a.key}>
@@ -322,14 +322,14 @@ export default function ApexWorld() {
       {/* the core - painted ABOVE the web (app order); display-only, the tap target
           is the circular disc below so agent nodes near the ring stay clickable */}
       <div style={{ position: "absolute", left: "50%", top: "50%", width: "min(560px, 58vw)", height: "min(500px, 56vw, 70vh)", transform: "translate(-50%, -50%)", zIndex: 3, pointerEvents: "none" }}>
-        <ApexHeroOrb state={orbState} interactive={false} />
+        <LunaHeroOrb state={orbState} interactive={false} />
       </div>
 
       {/* central tap disc - covers the ring only (nodes orbit outside it) */}
       <div
         role="button"
         tabIndex={0}
-        aria-label="Apex core - tap to energize"
+        aria-label="Luna core - tap to energize"
         onClick={boost}
         onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); boost(); } }}
         onMouseDown={(e) => e.preventDefault()}

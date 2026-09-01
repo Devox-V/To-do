@@ -1,5 +1,5 @@
-import ApexWorld from "@/components/ApexWorld";
-import ApexOverviewPanel from "@/components/ApexOverviewPanel";
+import LunaWorld from "@/components/LunaWorld";
+import LunaOverviewPanel from "@/components/LunaOverviewPanel";
 
 export default function Home() {
   return (
@@ -8,17 +8,17 @@ export default function Home() {
       style={{ background: "#04080f", color: "#f0ede8", position: "relative", overflow: "hidden" }}
     >
       {/* Top-left overview HUD: clock + weather + social links */}
-      <ApexOverviewPanel />
+      <LunaOverviewPanel />
 
       {/* The world: orb core + orbiting agent graph. Tap the orb to cycle its
           state; click any agent node to open its overview card. */}
       <section style={{ position: "relative", height: "100vh", minHeight: 620 }}>
-        <ApexWorld />
+        <LunaWorld />
       </section>
 
       {/* Repo link — remove or replace for your own use */}
       <a
-        href="https://github.com/RubenM1990/APEX-UI"
+        href="https://github.com/Devox-V/To-do"
         target="_blank"
         rel="noopener noreferrer"
         style={{
